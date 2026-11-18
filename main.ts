@@ -1,9 +1,9 @@
 import { BPS, runBars, type Bar, type BarsState, type BuyInput, type SellInput } from './vendor/makefun-bars.ts';
 
 const MAX_SLIPPAGE_BPS = 50;
-const BUY_DROP = 0.015; // 1.5% drop from peak
-const SELL_GAIN = 0.01;  // 1.0% gain target
-const STOP_LOSS = 0.015; // 1.5% stop loss
+const BUY_DROP = 0.02;     // 2% drop from peak
+const SELL_GAIN = 0.02;    // 2.0% gain target
+const STOP_LOSS = 0.015;   // 1.5% stop loss
 
 interface SymbolState {
   peakPrice: number;
@@ -42,6 +42,7 @@ await runBars({
         const dropFromPeak = (s.peakPrice - c) / s.peakPrice;
         if (dropFromPeak >= BUY_DROP) {
           entries.push(bar.symbol);
+          s.peakPrice = c;
         }
       }
     }
